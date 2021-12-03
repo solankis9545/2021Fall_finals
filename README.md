@@ -4,6 +4,8 @@ Project Title: Exploratory Data Analysis of Indian Premier League.
 
 Background: Indian Premier League also known as IPL is a professional cricket tournament hosted in India where players from multiple international teams participate. There are 8 teams competing over 200 players participating each year and around 60 matches played. As IPL is a cash-rich tournament, multiple factors need to be considered while analyzing players’ performance.
 
+![image](https://user-images.githubusercontent.com/87818442/144640653-e1185de0-3331-4423-abc4-4779a081dc27.png)
+
 Potential Hypothesis:
 
 1. Event of winning the toss is positively correlated with the event of a team winning the game.
