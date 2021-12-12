@@ -26,9 +26,10 @@ We are considering IPL datasets from the year 2008 to 2017.
 
 IPL Dataset Till 2017: https://data.world/raghu543/ipl-data-till-2017
 
-IPL Auction Datasets: We will be referring to the auction dataset from 2008 to 2008 from this dataset. https://github.com/Foridur3210/IPL-Dataset-Player-price-prediction/blob/master/IPL%20IMB381IPL2013.csv#L113
+IPL Auction Datasets: We referred to the auction dataset from 2008 to 2017 from this dataset. https://github.com/Foridur3210/IPL-Dataset-Player-price-prediction/blob/master/IPL%20IMB381IPL2013.csv#L113
+We also created an auction dataset manually by referencing https://www.iplt20.com/auction
 
-IPL Auction Additional Reference: We are even trying to latest auction prices from the official IPL website, and we will use this in our dataset. We will be referring auction prices from 2013 to 2017 from this dataset. https://www.iplt20.com/auction
+IPL Auction Additional Reference: We are even trying to the latest auction prices from the official IPL website, and we will use this in our dataset. We will be referring auction prices from 2013 to 2017 from this dataset. 
 
 Contributions:
 
