@@ -68,10 +68,10 @@ fast_bowlers = player[
 
 slow_bowlers = player[
     (player['Bowling_skill'] == 'Right-arm offbreak') | (player['Bowling_skill'] == 'Legbreak googly') | (
-                player['Bowling_skill'] == 'Slow left-arm orthodox') | (
-                player['Bowling_skill'] == 'Slow left-arm chinaman') | (player['Bowling_skill'] == 'Legbreak') | (
-                player['Bowling_skill'] == 'Right-arm bowler') | (player['Bowling_skill'] == '\xa0Legbreak') | (
-                player['Bowling_skill'] == '\xa0Right-arm offbreak')]
+            player['Bowling_skill'] == 'Slow left-arm orthodox') | (
+            player['Bowling_skill'] == 'Slow left-arm chinaman') | (player['Bowling_skill'] == 'Legbreak') | (
+            player['Bowling_skill'] == 'Right-arm bowler') | (player['Bowling_skill'] == '\xa0Legbreak') | (
+            player['Bowling_skill'] == '\xa0Right-arm offbreak')]
 
 
 def economy_rate(bowlers):
@@ -117,13 +117,13 @@ def bar_plot2(value1, value2, x_axis, y_axis, title):
 
 # bar_plot2('Fast', 'Slow', 'Bowler Type', 'Economy', 'Economy rates with respect to the type of bowler')
 
-def under_35_data(key):
+def over_35_data(key):
     """
     This function returns dataframe with only those players that have age more than or equal to 35.
     :param key: the column from 'overs_details' table that we should use while merging data, it should be in qoutes
     :return: a dataframe containing players with age more than or equal to 35
 
-    >>> value = under_35_data('Striker_match_SK')
+    >>> value = over_35_data('Striker_match_SK')
     >>> print(value.head()) #doctest: +NORMALIZE_WHITESPACE
            MatcH_id  Over_id  Ball_id  ...  Opposit_captain Player_keeper   Opposit_keeper
     4    598028       14        1  ...          V Kohli     DH Yagnik  KB Arun Karthik
@@ -140,7 +140,7 @@ def under_35_data(key):
     return final_data
 
 
-age_bat_data = under_35_data('Striker_match_SK')
+age_bat_data = over_35_data('Striker_match_SK')
 runs = age_bat_data.groupby(['Striker_match_SK'])['Runs_Scored'].sum()
 
 
@@ -185,6 +185,7 @@ def find_orange_winners(year):
         'Player_team'].unique()[0]
     return team_name
 
+
 def find_purple_winners(year):
     """
     This function is used to find which team does the purple cap holder belongs to.
@@ -205,6 +206,7 @@ def find_purple_winners(year):
     team_name = players_age[(players_age['Player_Id'] == most_wickets_index[0]) & (players_age['Season_year'] == year)][
         'Player_team'].unique()[0]
     return team_name
+
 
 def hypothesis_4(from_year, to_year):
     """
