@@ -204,3 +204,45 @@ def find_purple_winners(year):
     team_name = players_age[(players_age['Player_Id'] == most_wickets_index[0]) & (players_age['Season_year'] == year)][
         'Player_team'].unique()[0]
     return team_name
+
+def hypothesis_4(from_year, to_year):
+    """
+    This function implements tasks to analyse our hypothesis no.5
+    :param from_year: inclusive year from which you want to analyze hypothesis 5
+    :param to_year: excluding year to which you want to analyze hypothesis 5
+    :return: a tuple containing percentage of times orange cap holder was part of the winning team and percentage of
+    times purple cap holder was part of the winning team
+
+    >>> print(hypothesis_4(2008, 2018))
+    (5.263157894736842, 15.789473684210526)
+    """
+    orange = 0
+    purple = 0
+    for i in range(from_year, to_year):
+        most_runs = find_orange_winners(i)
+        most_wickets = find_purple_winners(i)
+        winners_values = winners[winners['season_year'] == i]['Team']
+        if most_runs == winners_values.values[0]:
+            orange += 1
+        elif most_wickets == winners_values.values[0]:
+            purple += 1
+    orange_ratio = (orange / len(most_runs) * 100)
+    purple_ratio = (purple / len(most_wickets) * 100)
+    return orange_ratio, purple_ratio
+
+
+def pie_chart(value):
+    """
+    This function is used to create a pie chart based on the ration provided
+    :param value: the percentage value using which we want to divide the pie chart into two parts
+    :return: a pie chart with the mentioned division into two parts
+    """
+    fig1, ax1 = plt.subplots()
+    labels = ['Wins', 'Losses']
+    sizes = [value, 100 - value]
+    explode = (0.1, 0)
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+            shadow=True, startangle=90)
+    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+    plt.title('Win percentage')
+    plt.show()
