@@ -115,3 +115,92 @@ def bar_plot2(value1, value2, x_axis, y_axis, title):
 
 
 # bar_plot2('Fast', 'Slow', 'Bowler Type', 'Economy', 'Economy rates with respect to the type of bowler')
+
+def under_35_data(key):
+    """
+    This function returns dataframe with only those players that have age more than or equal to 35.
+    :param key: the column from 'overs_details' table that we should use while merging data, it should be in qoutes
+    :return: a dataframe containing players with age more than or equal to 35
+
+    >>> value = under_35_data('Striker_match_SK')
+    >>> print(value.head()) #doctest: +NORMALIZE_WHITESPACE
+           MatcH_id  Over_id  Ball_id  ...  Opposit_captain Player_keeper   Opposit_keeper
+    4    598028       14        1  ...          V Kohli     DH Yagnik  KB Arun Karthik
+    5    598028       14        3  ...          V Kohli     DH Yagnik  KB Arun Karthik
+    6    598028       13        1  ...          V Kohli     DH Yagnik  KB Arun Karthik
+    7    598028       13        4  ...          V Kohli     DH Yagnik  KB Arun Karthik
+    8    598028       13        5  ...          V Kohli     DH Yagnik  KB Arun Karthik
+    <BLANKLINE>
+    [5 rows x 70 columns]
+    """
+    merged_data = pd.merge(overs_details, players_age, how='inner', left_on=[key],
+                           right_on=['Player_match_SK'])
+    final_data = merged_data[merged_data['Age_As_on_match'] >= 35]
+    return final_data
+
+
+age_bat_data = under_35_data('Striker_match_SK')
+runs = age_bat_data.groupby(['Striker_match_SK'])['Runs_Scored'].sum()
+
+
+def limit_partition(limit, total):
+    """
+    This function is returns number of players above and below a certain decided limit.
+    :param limit: the limit which decides the partition between players
+    :param total: aggregated data which is grouped by key used in the previous function
+    :return: tuple with number of players that are above and below the limit
+
+    >>> print(limit_partition(35, runs))
+    (285, 904)
+    """
+    above_limit = 0
+    below_limit = 0
+    for i in total:
+        if i >= limit:
+            above_limit += 1
+        else:
+            below_limit += 1
+    return above_limit, below_limit
+
+
+def find_orange_winners(year):
+    """
+    This function is used to find which team does the orange cap holder belongs to.
+    :param year: year for which the orange cap winner is to be found
+    :return: name of the team that the orange cap winner belongs to
+
+    >>> print(find_orange_winners(2010))
+    Mumbai Indians
+
+    >>> print(find_orange_winners(2011))
+    Royal Challengers Bangalore
+    """
+    season = overs_details[overs_details['Season'] == year]
+    striker = season.groupby(['StrikerSK'])['Runs_Scored'].sum()
+    orange_id = striker.idxmax()
+    most_run = player[player['PLAYER_SK'] == orange_id]['Player_Id']
+    most_run_index = most_run.values
+    team_name = players_age[(players_age['Player_Id'] == most_run_index[0]) & (players_age['Season_year'] == year)][
+        'Player_team'].unique()[0]
+    return team_name
+
+def find_purple_winners(year):
+    """
+    This function is used to find which team does the purple cap holder belongs to.
+    :param year: year for which the purple cap winner is to be found
+    :return: name of the team that the purple cap winner belongs to
+
+    >>> print(find_purple_winners(2010))
+    Deccan Chargers
+
+    >>> print(find_purple_winners(2011))
+    Mumbai Indians
+    """
+    season = overs_details[overs_details['Season'] == year]
+    bowler = season.groupby(['BOWLER_SK'])['Bowler_Wicket'].sum()
+    purple_id = bowler.idxmax()
+    most_wickets = player[player['PLAYER_SK'] == purple_id]['Player_Id']
+    most_wickets_index = most_wickets.values
+    team_name = players_age[(players_age['Player_Id'] == most_wickets_index[0]) & (players_age['Season_year'] == year)][
+        'Player_team'].unique()[0]
+    return team_name
