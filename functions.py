@@ -215,10 +215,11 @@ def hypothesis_4(from_year, to_year):
     times purple cap holder was part of the winning team
 
     >>> print(hypothesis_4(2008, 2018))
-    (5.263157894736842, 15.789473684210526)
+    (10.0, 30.0)
     """
     orange = 0
     purple = 0
+    year = 0
     for i in range(from_year, to_year):
         most_runs = find_orange_winners(i)
         most_wickets = find_purple_winners(i)
@@ -227,8 +228,9 @@ def hypothesis_4(from_year, to_year):
             orange += 1
         elif most_wickets == winners_values.values[0]:
             purple += 1
-    orange_ratio = (orange / len(most_runs) * 100)
-    purple_ratio = (purple / len(most_wickets) * 100)
+        year += 1
+    orange_ratio = (orange / year * 100)
+    purple_ratio = (purple / year * 100)
     return orange_ratio, purple_ratio
 
 
